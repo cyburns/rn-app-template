@@ -9,7 +9,13 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { defaultStyles } from "@/constants/Style";
 import { Link } from "expo-router";
-import { Ionicons, MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
+import {
+  Ionicons,
+  MaterialIcons,
+  FontAwesome5,
+  FontAwesome6,
+  AntDesign,
+} from "@expo/vector-icons";
 import Colors from "@/constants/Colors";
 import Animated, {
   useAnimatedStyle,
@@ -122,37 +128,6 @@ const ListItem = ({
             style={styles.image}
           />
 
-          <View
-            style={{
-              position: "absolute",
-              left: 33,
-              top: 30,
-              backgroundColor: Colors.primary,
-              borderRadius: 30,
-              alignSelf: "flex-start",
-              flexDirection: "row",
-              alignItems: "center",
-              paddingVertical: 10,
-              paddingHorizontal: 15,
-            }}
-          >
-            <FontAwesome5
-              name="location-arrow"
-              size={16}
-              color={Colors.white}
-              style={{ marginRight: 5 }}
-            />
-            <Text
-              style={{
-                fontFamily: "mon-sb",
-                color: Colors.white,
-                fontSize: 16,
-              }}
-            >
-              South Woods
-            </Text>
-          </View>
-
           <TouchableOpacity style={styles.bookmark}>
             <Ionicons name="bookmark-outline" size={30} color={Colors.white} />
           </TouchableOpacity>
@@ -161,34 +136,80 @@ const ListItem = ({
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
             <Text
               style={{
                 fontFamily: "mon-sb",
-                fontSize: 16,
+                fontSize: 20,
               }}
             >
               {item.name}
             </Text>
-            <View style={{ flexDirection: "row", gap: 4 }}>
-              <MaterialIcons name="device-hub" size={16} />
-              <Text style={{ fontFamily: "mon-sb" }}>
-                {item.devices_connected} Devices
+
+            <View
+              style={{ flexDirection: "row", gap: 4, alignItems: "center" }}
+            >
+              <MaterialIcons name="device-hub" size={20} />
+              <Text style={{ fontFamily: "mon-sb", fontSize: 20 }}>
+                {item.devices_connected}
               </Text>
             </View>
           </View>
 
-          <View style={{ flexDirection: "row", gap: 4 }}>
+          <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
+            <AntDesign name="warning" size={20} color={Colors.warning} />
             <Text style={{ fontFamily: "mon-sb", color: Colors.darkGray }}>
               Two low vacuum pressure alerts
             </Text>
           </View>
 
-          <View style={{ flexDirection: "row", gap: 4 }}>
+          <View style={{ flexDirection: "row", gap: 5 }}>
+            <MaterialIcons
+              name="report-gmailerrorred"
+              size={20}
+              color={Colors.error}
+            />
             <Text style={{ fontFamily: "mon-sb", color: Colors.darkGray }}>
               One high tank level alert
             </Text>
+          </View>
+
+          <View style={{ flexDirection: "row", gap: 5, marginVertical: 5 }}>
+            <View style={styles.pill}>
+              <FontAwesome5
+                name="location-arrow"
+                size={16}
+                color={Colors.white}
+                style={{ marginRight: 5 }}
+              />
+              <Text
+                style={{
+                  fontFamily: "mon-sb",
+                  color: Colors.white,
+                }}
+              >
+                South Woods
+              </Text>
+            </View>
+
+            <View style={[styles.pill, { backgroundColor: "#f94c6a" }]}>
+              <FontAwesome6
+                name="truck-field"
+                size={16}
+                color={Colors.white}
+                style={{ marginRight: 5 }}
+              />
+              <Text
+                style={{
+                  fontFamily: "mon-sb",
+                  color: Colors.white,
+                }}
+              >
+                Field 23
+              </Text>
+            </View>
           </View>
         </Animated.View>
       </Pressable>
@@ -218,6 +239,15 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 33,
     top: 33,
+  },
+  pill: {
+    backgroundColor: "#284693",
+    borderRadius: 30,
+    alignSelf: "flex-start",
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
   },
 });
 

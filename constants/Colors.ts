@@ -7,6 +7,7 @@ const black = "#000000";
 const legalBlue = "#1856B2";
 const error = "#FF003A";
 const success = "#4ECB71";
+const warning = "#FFC700";
 
 export default {
   primary,
@@ -18,4 +19,5 @@ export default {
   legalBlue,
   error,
   success,
+  warning
 };
