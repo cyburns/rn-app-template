@@ -2,7 +2,7 @@
 
 </p>
 
-## Run Seatr using CLI TWO
+## Run using CLI
 
 - **Fork** and **Clone** Repository. Work from your feature branch. Push changes to master and open a PR. Master is proctected by at least one code review. 
 
