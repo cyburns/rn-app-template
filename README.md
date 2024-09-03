@@ -5,9 +5,6 @@
 ## Run using CLI
 
 - **Fork** and **Clone** Repository. Work from your feature branch. Push changes to master and open a PR. Master is proctected by at least one code review. 
-
-- Please refer to the Seatr Figma board for design choices. Default styles and colors can be found in constants/Styles.ts and constants/Colors.ts and accesed by importing them.
-
 - Open the project directory.
 - Install dependencies.
 
