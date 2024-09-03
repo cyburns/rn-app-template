@@ -12,7 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { Link } from "expo-router";
-import { cuisineCategories } from "@/constants/data/data";
+import { deviceCata } from "@/constants/data/data";
 
 interface Props {
   onCategoryChanged: (category: string) => void;
@@ -30,7 +30,7 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
       scrollRef.current?.scrollTo({ x: x - 16, y: 0, animated: true });
     });
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    onCategoryChanged(cuisineCategories[index].name);
+    onCategoryChanged(deviceCata[index].name);
   };
 
   return (
@@ -70,7 +70,7 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
             paddingHorizontal: 16,
           }}
         >
-          {cuisineCategories.map((item, index) => (
+          {deviceCata.map((item, index) => (
             <TouchableOpacity
               ref={(el) => (itemsRef.current[index] = el)}
               key={index}

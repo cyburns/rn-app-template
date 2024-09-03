@@ -1,35 +1,31 @@
-export const cuisineCategories = [
+export const deviceCata = [
   {
-    name: "Trending",
+    name: "Urgent",
     icon: "local-fire-department",
   },
   {
-    name: "Italian",
-    icon: "dinner-dining",
+    name: "Vacuum",
+    icon: "air",
   },
   {
-    name: "Healthy",
-    icon: "local-dining",
+    name: "Tank",
+    icon: "propane-tank",
   },
   {
-    name: "Bar",
-    icon: "local-bar",
+    name: "Base Stations",
+    icon: "rebase-edit",
   },
   {
-    name: "Steak",
-    icon: "room-service",
+    name: "Flowmeter",
+    icon: "local-florist",
   },
   {
-    name: "Breakfast",
-    icon: "egg-alt",
+    name: "Pressure",
+    icon: "compress",
   },
   {
-    name: "French",
-    icon: "bakery-dining",
-  },
-  {
-    name: "Chinese",
-    icon: "ramen-dining",
+    name: "Soil",
+    icon: "agriculture",
   },
 ];
 
