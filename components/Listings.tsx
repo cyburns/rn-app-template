@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { defaultStyles } from "@/constants/Style";
 import { Link } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Colors from "@/constants/Colors";
 import Animated, {
   useAnimatedStyle,
@@ -113,7 +113,7 @@ const ListItem = ({
         onPressOut={onPressOut}
       >
         <Animated.View
-          style={[styles.listing, pressedItem === index && animatedStyle]}
+          style={[styles.listing]}
           entering={FadeInRight}
           exiting={FadeOutLeft}
         >
@@ -121,14 +121,40 @@ const ListItem = ({
             source={require("../assets/images/maple-farm.jpg")}
             style={styles.image}
           />
-          <TouchableOpacity
+
+          <View
             style={{
               position: "absolute",
-              right: 30,
+              left: 33,
               top: 30,
+              backgroundColor: Colors.primary,
+              borderRadius: 30,
+              alignSelf: "flex-start",
+              flexDirection: "row",
+              alignItems: "center",
+              paddingVertical: 10,
+              paddingHorizontal: 15,
             }}
           >
-            <Ionicons name="heart-outline" size={24} color={Colors.white} />
+            <FontAwesome5
+              name="location-arrow"
+              size={16}
+              color={Colors.white}
+              style={{ marginRight: 5 }}
+            />
+            <Text
+              style={{
+                fontFamily: "mon-sb",
+                color: Colors.white,
+                fontSize: 16,
+              }}
+            >
+              South Woods
+            </Text>
+          </View>
+
+          <TouchableOpacity style={styles.bookmark}>
+            <Ionicons name="bookmark-outline" size={30} color={Colors.white} />
           </TouchableOpacity>
 
           <View
@@ -146,26 +172,22 @@ const ListItem = ({
               {item.name}
             </Text>
             <View style={{ flexDirection: "row", gap: 4 }}>
-              <Ionicons name={"star"} size={16} />
-              <Text style={{ fontFamily: "mon-sb" }}>{item.review_score}</Text>
+              <MaterialIcons name="device-hub" size={16} />
+              <Text style={{ fontFamily: "mon-sb" }}>
+                {item.devices_connected} Devices
+              </Text>
             </View>
           </View>
 
           <View style={{ flexDirection: "row", gap: 4 }}>
             <Text style={{ fontFamily: "mon-sb", color: Colors.darkGray }}>
-              {item.city}, {item.state}
+              Two low vacuum pressure alerts
             </Text>
           </View>
 
           <View style={{ flexDirection: "row", gap: 4 }}>
             <Text style={{ fontFamily: "mon-sb", color: Colors.darkGray }}>
-              {item.reservation_date}
-            </Text>
-          </View>
-
-          <View style={{ flexDirection: "row", gap: 4 }}>
-            <Text style={{ fontFamily: "mon-sb", color: Colors.darkGray }}>
-              {item.table_size}
+              One high tank level alert
             </Text>
           </View>
         </Animated.View>
@@ -184,13 +206,18 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 250,
     borderRadius: 30,
-    marginBottom: 16,
+    marginBottom: 10,
   },
   info: {
     textAlign: "center",
     fontFamily: "mon-sb",
     fontSize: 16,
     marginTop: 4,
+  },
+  bookmark: {
+    position: "absolute",
+    right: 33,
+    top: 33,
   },
 });
 
