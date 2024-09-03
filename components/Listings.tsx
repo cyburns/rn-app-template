@@ -1,10 +1,9 @@
 import {
   View,
   Text,
-  FlatList,
+  Pressable,
   TouchableOpacity,
   StyleSheet,
-  ListRenderItem,
   Image,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
@@ -12,7 +11,13 @@ import { defaultStyles } from "@/constants/Style";
 import { Link } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "@/constants/Colors";
-import Animated, { FadeInRight, FadeOutLeft } from "react-native-reanimated";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  FadeInRight,
+  FadeOutLeft,
+} from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 import {
   BottomSheetFlatList,
@@ -27,16 +32,17 @@ interface Props {
 
 const Listings = ({ listings, category, refresh }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [pressedItem, setPressedItem] = useState<number | null>(null);
   const listRef = useRef<BottomSheetFlatListMethods>(null);
 
-  //this may now be proper behavior but it fixes an issue for now
+  // This may not be the intended behavior but it fixes an issue for now
   useEffect(() => {
     if (refresh) {
       listRef.current?.scrollToOffset({ offset: 0, animated: true });
     }
   }, [refresh]);
 
-  // Use for "updating" the views data after category changed
+  // Use for "updating" the view's data after category change
   useEffect(() => {
     setIsLoading(true);
 
@@ -45,18 +51,74 @@ const Listings = ({ listings, category, refresh }: Props) => {
     }, 500);
   }, [category]);
 
-  const renderRow: ListRenderItem<any> = ({ item }) => (
+  const renderRow = ({ item, index }: { item: any; index: number }) => {
+    return (
+      <ListItem
+        item={item}
+        index={index}
+        pressedItem={pressedItem}
+        setPressedItem={setPressedItem}
+      />
+    );
+  };
+
+  return (
+    <View style={defaultStyles.container}>
+      <BottomSheetFlatList
+        renderItem={renderRow}
+        ref={listRef}
+        data={isLoading ? [] : listings}
+        ListHeaderComponent={
+          <Text style={styles.info}>{listings.length} Reservations</Text>
+        }
+      />
+    </View>
+  );
+};
+
+const ListItem = ({
+  item,
+  index,
+  pressedItem,
+  setPressedItem,
+}: {
+  item: any;
+  index: number;
+  pressedItem: number | null;
+  setPressedItem: React.Dispatch<React.SetStateAction<number | null>>;
+}) => {
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+  const onPressIn = () => {
+    setPressedItem(index);
+    scale.value = withSpring(0.923, { damping: 10, stiffness: 100 });
+  };
+
+  const onPressOut = () => {
+    setPressedItem(null);
+    scale.value = withSpring(1, { damping: 10, stiffness: 100 });
+  };
+
+  return (
     <Link href={`/listing/${item.id}`} asChild>
-      <TouchableOpacity
+      <Pressable
         onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
       >
         <Animated.View
-          style={styles.listing}
+          style={[styles.listing, pressedItem === index && animatedStyle]}
           entering={FadeInRight}
           exiting={FadeOutLeft}
         >
           <Image
-            source={require("../assets/images/boston-chops-img.png")}
+            source={require("../assets/images/maple-farm.jpg")}
             style={styles.image}
           />
           <TouchableOpacity
@@ -107,21 +169,8 @@ const Listings = ({ listings, category, refresh }: Props) => {
             </Text>
           </View>
         </Animated.View>
-      </TouchableOpacity>
+      </Pressable>
     </Link>
-  );
-
-  return (
-    <View style={defaultStyles.container}>
-      <BottomSheetFlatList
-        renderItem={renderRow}
-        ref={listRef}
-        data={isLoading ? [] : listings}
-        ListHeaderComponent={
-          <Text style={styles.info}>{listings.length} Reservations</Text>
-        }
-      />
-    </View>
   );
 };
 
@@ -133,7 +182,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 350,
+    height: 250,
     borderRadius: 30,
     marginBottom: 16,
   },
